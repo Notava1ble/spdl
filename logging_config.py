@@ -49,6 +49,8 @@ def configure_logger(log_file: str = "spdl.log", debug: bool = False):
     # Console handler for ERROR and above (stderr)
     stderr_handler = logging.StreamHandler(sys.stderr)
     stderr_handler.setLevel(logging.ERROR)
-    stderr_formatter = ColoredFormatter("%(levelname)s - %(message)s")
+    stderr_formatter = ColoredFormatter(
+        "%(levelname)s at [%(filename)s:%(lineno)d] - %(message)s"
+    )
     stderr_handler.setFormatter(stderr_formatter)
     logger.addHandler(stderr_handler)
