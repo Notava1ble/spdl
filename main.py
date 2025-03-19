@@ -2,6 +2,7 @@ import argparse
 import os
 import logging
 import sys
+from app import App
 from parser import parse_args
 from utils import get_token, trackname_convention
 from downloader import check_track_playlist
@@ -10,6 +11,7 @@ from logging_config import setup_logging
 
 
 def main():
+    app = App()
     args = parse_args()
 
     if args.sync:
@@ -17,14 +19,9 @@ def main():
     else:
         token = get_token()
         _, set_trackname_convention = trackname_convention()
-        for link in args.link:
-            check_track_playlist(
-                link,
-                args.outpath,
-                create_folder=args.folder,
-                trackname_convention=set_trackname_convention,
-                token=token,
-            )
+
+        app.set_links(args.link)
+        app.outpath = args.outpath
 
     print("\n" + "-" * 25 + " Task complete ;) " + "-" * 25 + "\n")
 

@@ -1,8 +1,17 @@
 import argparse
 import os
+from typing import List, Optional
 
 
-def parse_args():
+# For type checking
+class Args:
+    link: Optional[List[str]]
+    outpath: str
+    sync: Optional[str]
+    folder: bool
+
+
+def parse_args() -> Args:
     # Initialize parser
     parser = argparse.ArgumentParser(
         description="Program to download tracks from Spotify via CLI"
