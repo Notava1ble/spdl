@@ -4,7 +4,7 @@ import re
 from typing import Dict, List
 
 from link import Link
-from models import Song
+from configs.models import Song
 from spotify_client import SpotifyClient
 from utils import get_id
 
@@ -22,6 +22,7 @@ class App:
         self.client = SpotifyClient(self)
         self.links: List[Link] = []
         self.outpath: str = outpath
+        self.trackname_convention: int = 1
 
     def set_links(self, links: List[str]) -> None:
         for link in links:
@@ -41,3 +42,10 @@ class App:
             self.links.append(Link(link=link, id=id, linkType=linkType))
 
         logging.debug(f"Set links: {[link.link for link in self.links]}")
+
+    def run(self) -> None:
+        for link in self.links:
+            if link.linkType == "track":
+                self.download_track(link)
+            elif link.linkType == "playlist" or link.linkType == "album":
+                self.download_playlist(link)

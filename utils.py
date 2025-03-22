@@ -1,8 +1,8 @@
 import os
 import re
 import json
-from config import NAME_SANITIZE_REGEX
-from models import Song
+from configs.config import NAME_SANITIZE_REGEX
+from configs.models import Song
 
 
 def resolve_path(outpath, playlist_folder=False):

@@ -3,7 +3,7 @@ import logging
 from typing import List
 import requests
 
-from models import PlaylistMetadataResponse, PlaylistTracksResponse
+from configs.models import PlaylistMetadataResponse, PlaylistTracksResponse
 from utils import get_id, make_unique_song_objects
 
 

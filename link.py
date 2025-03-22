@@ -1,6 +1,6 @@
 from typing import List
 
-from models import Song
+from configs.models import Song
 
 
 class Link:
