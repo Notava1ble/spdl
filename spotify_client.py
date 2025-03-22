@@ -8,7 +8,8 @@ from utils import get_id, make_unique_song_objects
 
 
 class SpotifyClient:
-    def __init__(self):
+    def __init__(self, app):
+        self.app = app
         self.BASE_URL: str = "https://spotidownloader.com"
         self.CUSTOM_HEADER = {
             "Host": "api.spotidownloader.com",

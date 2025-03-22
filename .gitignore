@@ -2,6 +2,7 @@ __pycache__/
 venv
 var/
 songs/
+_old/
 
 *.mp3
 *.log

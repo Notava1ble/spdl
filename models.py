@@ -36,8 +36,3 @@ class PlaylistTracksResponse(TypedDict):
     trackList: List[TrackMetadataResponse]
     nextOffset: str | None
     statusCode: 200
-
-
-class LinkType(TypedDict):
-    link: str
-    type: str

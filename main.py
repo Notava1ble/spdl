@@ -3,19 +3,20 @@ import os
 import logging
 import sys
 from app import App
-from parser import parse_args
+from parser import Args, parse_args
 from utils import get_token, trackname_convention
-from downloader import check_track_playlist
-from sync import handle_sync_file
 from logging_config import setup_logging
 
 
 def main():
-    app = App()
-    args = parse_args()
+    args: Args = parse_args()
+    outpath: str = os.path.join(os.getcwd(), args.outpath)
+    logging.debug(f"Output path: {outpath}")
+    app: App = App(outpath=outpath)
 
     if args.sync:
-        handle_sync_file(os.path.abspath(args.sync))
+        # handle_sync_file(os.path.abspath(args.sync))
+        ...
     else:
         token = get_token()
         _, set_trackname_convention = trackname_convention()
