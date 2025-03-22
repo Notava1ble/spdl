@@ -5,7 +5,7 @@ import sys
 from app import App
 from configs.parser import Args, parse_args
 from utils import get_token, trackname_convention
-from configs.logging_config import setup_logging
+from configs.logging_config import configure_logger
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
 
 if __name__ == "__main__":
     try:
-        setup_logging()
+        configure_logger()
         logging.info("-" * 10 + "Program started" + "-" * 10)
         main()
         logging.info("-" * 10 + "Program ended" + "-" * 10)

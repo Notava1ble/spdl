@@ -35,4 +35,4 @@ class PlaylistTracksResponse(TypedDict):
     success: bool
     trackList: List[TrackMetadataResponse]
     nextOffset: str | None
-    statusCode: 200
+    statusCode: int
