@@ -61,7 +61,6 @@ def save_audio(trackname, link, outpath):
     if os.path.exists(os.path.join(outpath, f"{trackname}.mp3")) or \
        os.path.exists(os.path.join(low_quality_path, f"{trackname}.mp3")):
         logging.info(f"{trackname} already exists in the directory ({outpath}). Skipping download!")
-        print("\tThis track already exists in the directory. Skipping download!")
         return None
     
     audio_response = requests.get(link, headers=PURR_HEADER)
@@ -90,7 +89,6 @@ def save_audio(trackname, link, outpath):
 
     else:
         logging.error(f"Failed to download {trackname}. Status code: {audio_response.status_code}")
-        print(f"\tFailed to download {trackname}. Status code: {audio_response.status_code}")
         return None
 
 def check_track_playlist(link, outpath, create_folder, trackname_convention, token):
@@ -114,31 +112,35 @@ def check_track_playlist(link, outpath, create_folder, trackname_convention, tok
 def download_track(track_link, outpath, trackname_convention, token, max_attempts=3):
     resp = get_track_info(track_link, token)
     if resp["statusCode"] == 403:
-        print("\tStatus code 403: Unauthorized access. Please provide a new token.")
-        logging.error("Token expired, request new token")
+        logging.warning("\tStatus code 403: Unauthorized access. Please provide a new token.")
         token = get_token(reset=True) # Resets the cache
         resp = get_track_info(track_link, token)  # Retry with new token
     if resp['success'] == False:
-        print(f"Error: {resp['message']}")
-        logging.error(f"Error: {resp['message']}")
+        logging.error(f"Error getting track info: {resp['message']}")
         return
 
     trackname = f"{resp['metadata']['title']} - {resp['metadata']['artists']}"
     if trackname_convention == 2:
         trackname = f"{resp['metadata']['artists']} - {resp['metadata']['title']}"
 
-    print(f"\nDownloading {trackname} to ({outpath})")
+    logging.debug("Got info for track name: %s", trackname)
+
+    logging.info("\nDownloading %s to (%s)", trackname, outpath)
     for attempt in range(max_attempts):
+        logging.debug("Attempt %s", attempt)
         try:
             # raise Exception("Testing")
+            logging.debug("Saving audio...")
             is_high_quality = save_audio(trackname, resp['link'], outpath)
             if is_high_quality is not None:  # Check if download was successful
                 # cover_art = requests.get(resp['metadata']['cover']).content
+                logging.debug("Attaching metadata...")
                 attach_track_metadata(trackname, outpath, is_high_quality, resp['metadata'])
             break
         except Exception as e:
-            logging.error(f"Attempt {attempt+1}/{max_attempts} - {trackname} --> {e}")
-            print(f"\tAttempt {attempt+1}/{max_attempts} failed with error: ", e)
+            logging.error(f"Attempt {attempt+1}/{max_attempts} {trackname} failed with error: {e}")
+
+    logging.debug("Removing empty files")
     remove_empty_files(outpath)
 
 def check_existing_tracks(song_list_dict, outpath):

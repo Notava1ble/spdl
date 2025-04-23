@@ -1,6 +1,7 @@
 __pycache__/
 venv
 var/
+.vscode/
 
 *.mp3
 *.log
