@@ -32,9 +32,6 @@ def main():
                 token=token,
             )
 
-    logging.info("\n" + "-" * 25 + " Task complete ;) " + "-" * 25 + "\n")
-
-
 def parse_args():
     parser = argparse.ArgumentParser(
         description="Program to download tracks from Spotify via CLI"
