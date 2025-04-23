@@ -9,14 +9,18 @@ from models import Song
 
 def resolve_path(outpath, playlist_folder=False):
     if not os.path.exists(outpath):
+        logging.warning("Specified outpath (%s) does not exist", outpath)
         if not playlist_folder:
             create_folder = input(
                 "Directory specified does not exist. Do you want to create it? (y/N): "
             )
         if playlist_folder or create_folder.lower() == "y":
             os.mkdir(outpath)
+            logging.info("Created path: %s", outpath)
         else:
-            print("Exiting program")
+            logging.error(
+                "Outpath folder does not exist and user didn't accept to create folder. Exiting..."
+            )
             exit()
 
 
@@ -94,9 +98,9 @@ def get_token(reset=False):
         token = input("Enter Token: ").strip()
         with open(cache_file, "w") as f:
             json.dump({"token": token}, f)
-            logging.info("Wrote new token to Cache file.")
+            logging.info("Wrote new token to Cache file")
     else:
         with open(cache_file) as f:
             token = json.load(f).get("token")
-            logging.info("Loaded cached token.")
+            logging.info("Loaded cached token")
     return token

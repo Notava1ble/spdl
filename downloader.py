@@ -98,20 +98,20 @@ def check_track_playlist(link, outpath, create_folder, trackname_convention, tok
     resolve_path(outpath)
     # if "/track/" in link:
     if re.search(r".*spotify\.com\/(?:intl-[a-zA-Z]{2}\/)?track\/", link):
+        logging.debug("Detected track link. Handling download...")
         download_track(link, outpath, trackname_convention, token)
     # elif "/playlist/" in link:
     elif re.search(r".*spotify\.com\/playlist\/", link):
+        logging.debug("Detected playlist link. Handling download...")
         download_playlist_tracks(link, outpath, create_folder, trackname_convention, token)
     # elif "/album/" in link:
     elif re.search(r".*spotify\.com\/album\/", link):
+        logging.debug("Detected album link. Handling download...")
         download_playlist_tracks(link, outpath, create_folder, trackname_convention, mode='album', token=token)
     else:
         logging.error(f"{link} is not a valid Spotify track or playlist link")
-        print(f"\n{link} is not a valid Spotify track or playlist link")
 
 def download_track(track_link, outpath, trackname_convention, token, max_attempts=3):
-    print("\nTrack link identified")
-
     resp = get_track_info(track_link, token)
     if resp["statusCode"] == 403:
         print("\tStatus code 403: Unauthorized access. Please provide a new token.")

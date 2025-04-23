@@ -16,9 +16,14 @@ def main():
         logging.debug("sync path arg: %s", sync_path)
         handle_sync_file(sync_path)
     else:
+        logging.debug("Getting token")
         token = get_token()
         _, set_trackname_convention = trackname_convention()
+        logging.debug(
+            "Set trackname convention to: %s, %s", set_trackname_convention, _
+        )
         for link in args.link:
+            logging.debug("Working with link: %s", link)
             check_track_playlist(
                 link,
                 args.outpath,
@@ -27,7 +32,7 @@ def main():
                 token=token,
             )
 
-    print("\n" + "-" * 25 + " Task complete ;) " + "-" * 25 + "\n")
+    logging.info("\n" + "-" * 25 + " Task complete ;) " + "-" * 25 + "\n")
 
 
 def parse_args():
@@ -57,9 +62,9 @@ def parse_args():
 if __name__ == "__main__":
     try:
         configure_logger()
-        logging.info("-" * 10 + "Program started" + "-" * 10)
+        logging.debug("-" * 10 + "Program started" + "-" * 10)
         main()
-        logging.info("-" * 10 + "Program ended" + "-" * 10)
+        logging.debug("-" * 10 + "Program ended" + "-" * 10)
     except KeyboardInterrupt:
         logging.error("\n------ Exiting program ------")
         logging.debug("Program exited by user")

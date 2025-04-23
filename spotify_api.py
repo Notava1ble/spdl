@@ -1,3 +1,4 @@
+import logging
 import requests
 from config import CUSTOM_HEADER
 from utils import make_unique_song_objects
@@ -5,6 +6,7 @@ from utils import make_unique_song_objects
 
 def get_track_info(link, token):
     track_id = link.split("/")[-1].split("?")[0]
+    logging.debug("Getting track info for track id: %s", track_id)
     response = requests.get(
         f"https://api.spotidownloader.com/download/{track_id}?token={token}",
         headers=CUSTOM_HEADER,
