@@ -9,29 +9,7 @@ from logging_config import configure_logger
 
 
 def main():
-    # Initialize parser
-    parser = argparse.ArgumentParser(
-        description="Program to download tracks from Spotify via CLI"
-    )
-    # Add arguments
-    parser.add_argument("-link", nargs="+", help="URL of the Spotify track or playlist")
-    parser.add_argument(
-        "-outpath",
-        nargs="?",
-        default=os.getcwd(),
-        help="Path to save the downloaded track",
-    )
-    parser.add_argument(
-        "-sync",
-        nargs="?",
-        const="sync.json",
-        help="Path of sync.json file to sync local playlist folders with Spotify playlists",
-    )
-    parser.add_argument(
-        "-folder", nargs="?", default=True, help="Create a folder for the playlist(s)"
-    )
-
-    args = parser.parse_args()
+    args = parse_args()
 
     if args.sync:
         handle_sync_file(os.path.abspath(args.sync))

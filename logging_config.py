@@ -20,7 +20,7 @@ class ColoredFormatter(logging.Formatter):
         return f"{log_color}{message}{self.RESET}"
 
 
-def configure_logger(log_file: str = "Mod_updater.log", debug: bool = False):
+def configure_logger(log_file: str = "spdl.log", debug: bool = False):
     """
     Configures and returns a logger.
 
