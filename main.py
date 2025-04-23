@@ -12,7 +12,9 @@ def main():
     args = parse_args()
 
     if args.sync:
-        handle_sync_file(os.path.abspath(args.sync))
+        sync_path = os.path.abspath(args.sync)
+        logging.debug("sync path arg: %s", sync_path)
+        handle_sync_file(sync_path)
     else:
         token = get_token()
         _, set_trackname_convention = trackname_convention()
@@ -59,5 +61,5 @@ if __name__ == "__main__":
         main()
         logging.info("-" * 10 + "Program ended" + "-" * 10)
     except KeyboardInterrupt:
-        print("\n------ Exiting program ------")
-        logging.info("Program exited by user")
+        logging.error("\n------ Exiting program ------")
+        logging.debug("Program exited by user")
