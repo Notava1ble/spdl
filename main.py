@@ -66,5 +66,4 @@ if __name__ == "__main__":
         main()
         logging.debug("-" * 10 + "Program ended" + "-" * 10)
     except KeyboardInterrupt:
-        logging.error("\n------ Exiting program ------")
         logging.debug("Program exited by user")
